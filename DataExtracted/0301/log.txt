@@ -1,0 +1,13 @@
+BF crawl new
+
+all information
+
+start:  0228 23:53:41
+finish:  0302 1:49:33
+
+	video	time
+0	359	96
+1	3636	1740
+2	19817	10833
+3	131701	80683
+total	155513	93352
