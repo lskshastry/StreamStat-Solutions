@@ -1,6 +1,9 @@
 # StreatStat-Solutions
 Shared repo for analyzing YouTube data for Cpt_S 415 at WSU
 
+First ensure you install the proper required external libraries 
+To do this run "pip install -r requirements.txt"
+
 First to run youtube_start.py
 Insert zip folders into DataZip
 The files will be auto-extracted, cleansed, and parsed...

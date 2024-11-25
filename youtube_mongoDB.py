@@ -73,43 +73,55 @@ collection = db['videos']
 videos_data = load_folder(filepath)
 
 # Dictionary to store unique videos by 'video_id' as the key
-merged_videos = {}
-for video in videos_data:
-    video_id = video['video_id']
-    # Update the data with the latest crawl (overwrite if video_id already exists)
-    merged_videos[video_id] = video
+def store_unique_videos(videos_data):
+    merged_videos = {}
+    for video in videos_data:
+        video_id = video['video_id']
+        # Update the data with the latest crawl (overwrite if video_id already exists)
+        merged_videos[video_id] = video
 
-# Convert the merged dictionary to a DataFrame
-df = pd.DataFrame(merged_videos.values())
+    # Convert the merged dictionary to a DataFrame
+    df = pd.DataFrame(merged_videos.values())
+    return df
+
 
 # Convert data types
-df['video_id'] = df['video_id'].astype(str)
-df['uploader'] = df['uploader'].astype(str)
-df['age'] = pd.to_numeric(df['age'], errors='coerce')
-df['category'] = df['category'].astype(str)
-df['length'] = pd.to_numeric(df['length'], errors='coerce')
-df['views'] = pd.to_numeric(df['views'], errors='coerce')
-df['rate'] = pd.to_numeric(df['rate'], errors='coerce')
-df['ratings'] = pd.to_numeric(df['ratings'], errors='coerce')
-df['comments'] = pd.to_numeric(df['comments'], errors='coerce')
+def convert_data_types(df):
+    df['video_id'] = df['video_id'].astype(str)
+    df['uploader'] = df['uploader'].astype(str)
+    df['age'] = pd.to_numeric(df['age'], errors='coerce')
+    df['category'] = df['category'].astype(str)
+    df['length'] = pd.to_numeric(df['length'], errors='coerce')
+    df['views'] = pd.to_numeric(df['views'], errors='coerce')
+    df['rate'] = pd.to_numeric(df['rate'], errors='coerce')
+    df['ratings'] = pd.to_numeric(df['ratings'], errors='coerce')
+    df['comments'] = pd.to_numeric(df['comments'], errors='coerce')
+    return df
 
 # Handle missing values
-df.fillna({
-    'age': df['age'].median(),
-    'length': df['length'].median(),
-    'views': df['views'].median(),
-    'rate': df['rate'].mean(),
-    'ratings': 0,
-    'comments': 0
-}, inplace=True)
+def fill_missing_data(df):
+    df.fillna({
+        'age': df['age'].median(),
+        'length': df['length'].median(),
+        'views': df['views'].median(),
+        'rate': df['rate'].mean(),
+        'ratings': 0,
+        'comments': 0
+    }, inplace=True)
+    return df
 
 # Display some cleaned data to verify
-print(df.head())
+def print_data(df):
+    print(df.head())
 
 # Convert data back into a list of documents for MongoDB insertion
-videos_data_for_mongo = df.to_dict(orient='records')
+def insert_to_mongoDB(df):
+    try:
+        videos_data_for_mongo = df.to_dict(orient='records')
 
-# Insert the deduplicated data into MongoDB
-collection.insert_many(videos_data_for_mongo)
+        # Insert the deduplicated data into MongoDB
+        collection.insert_many(videos_data_for_mongo)
 
-print("Data has been successfully inserted into MongoDB.")
+        print("Data has been successfully inserted into MongoDB.")
+    except Exception as e:
+        print(f"Error inserting data into MongoDB: {e}")

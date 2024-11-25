@@ -3,7 +3,24 @@ import zipfile
 import pandas as pd
 
 # Step 1: Extract Zip Files
+# def extract_zip_files(zip_dir, extract_to):
+#     for file_name in os.listdir(zip_dir):
+#         if file_name.endswith('.zip'):
+#             file_path = os.path.join(zip_dir, file_name)
+#             with zipfile.ZipFile(file_path, 'r') as zip_ref:
+#                 zip_ref.extractall(extract_to)
+#             print(f"Extracted: {file_name}")
+
+# # Define directories for extraction
+#zip_directory = 'C:/Users/Gurma/Desktop/School/Fall24/415/GroupWork3/DataZip'
+#extracted_directory = 'C:/Users/Gurma/Desktop/School/Fall24/415/GroupWork3/DataExtracted'
+
 def extract_zip_files(zip_dir, extract_to):
+        # Ensure the target directory exists
+    if not os.path.exists(extract_to):
+        os.makedirs(extract_to)
+
+    # Iterate through all .zip files in the zip directory
     for file_name in os.listdir(zip_dir):
         if file_name.endswith('.zip'):
             file_path = os.path.join(zip_dir, file_name)
@@ -11,12 +28,19 @@ def extract_zip_files(zip_dir, extract_to):
                 zip_ref.extractall(extract_to)
             print(f"Extracted: {file_name}")
 
-# Define directories for extraction
-zip_directory = 'C:/Users/Gurma/Desktop/School/Fall24/415/GroupWork3/DataZip'
-extracted_directory = 'C:/Users/Gurma/Desktop/School/Fall24/415/GroupWork3/DataExtracted'
+    if not os.path.exists(extract_to):
+        os.makedirs(extract_to)
+
+    # Iterate through all files in the zip directory
+    for file_name in os.listdir(zip_dir):
+        if file_name.endswith('.zip'):
+            file_path = os.path.join(zip_dir, file_name)
+            with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                zip_ref.extractall(extract_to)
+            print(f"Extracted: {file_name}")
 
 # Extract the zip files
-extract_zip_files(zip_directory, extracted_directory)
+#extract_zip_files(zip_directory, extracted_directory)
 
 # Step 2: Load Data from Extracted Files
 def load_data_from_directory(directory):
@@ -44,8 +68,8 @@ def load_data_from_directory(directory):
     return pd.concat(data_frames, ignore_index=True) if data_frames else pd.DataFrame()
 
 # Load data from extracted directory
-raw_data = load_data_from_directory(extracted_directory)
-print(f"Loaded {len(raw_data)} rows of data in total.\n\nStarting Data Cleaning\n")
+#raw_data = load_data_from_directory(extracted_directory)
+#print(f"Loaded {len(raw_data)} rows of data in total.\n\nStarting Data Cleaning\n")
 
 # Step 3: Cleanse and Transform Data
 def cleanse_and_transform_data(df):
@@ -92,6 +116,6 @@ def cleanse_and_transform_data(df):
     return df
 
 # Clean and transform the data
-cleaned_data = cleanse_and_transform_data(raw_data)
-print("Data Cleaning Finished!")
-print(cleaned_data.head())  # Display some cleaned data to verify
+#cleaned_data = cleanse_and_transform_data(raw_data)
+#print("Data Cleaning Finished!")
+#print(cleaned_data.head())  # Display some cleaned data to verify
