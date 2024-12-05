@@ -191,6 +191,7 @@ class YouTubeAnalysisApp(QMainWindow):
         # Limit graph to a subset of nodes (e.g., top 50 high-degree nodes)
         top_degree_nodes = sorted(G.degree, key=lambda x: x[1], reverse=True)[:50]
         subset_nodes = [node for node, _ in top_degree_nodes]
+        subset_nodes = sorted(subset_nodes)
         subset = G.subgraph(subset_nodes)
 
         # Spring layout with subset
@@ -204,6 +205,7 @@ class YouTubeAnalysisApp(QMainWindow):
         plt.figure(figsize=(10, 10))
         nx.draw_networkx_nodes(subset, pos, node_size=50, alpha=0.7)
         nx.draw_networkx_edges(subset, pos, alpha=0.5)
+        nx.draw_networkx_labels(subset, pos, font_size=8)
         plt.title('Subset Network Graph', fontsize=14)
         plt.axis('off')
         plt.show()

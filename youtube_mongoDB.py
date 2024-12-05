@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 from pymongo import MongoClient
-import json
 
 # Define the directory path
 filepath = 'C:/Users/Gurma/Desktop/School/Fall24/415/GroupWork3/DataExtracted'
