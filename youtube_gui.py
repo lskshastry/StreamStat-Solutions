@@ -185,8 +185,8 @@ class YouTubeAnalysisApp(QMainWindow):
         pagerank = nx.pagerank(G)
         top_videos = sorted(pagerank.items(), key=lambda x: x[1], reverse=True)[:10]
         self.result_text.append("Top 10 Influential Videos by PageRank:")
-        for video_id, pagerank in top_videos:
-            self.result_text.append(f"Video ID: {video_id}, PageRank Score: {pagerank}")
+        for video_id, score in top_videos:
+            self.result_text.append(f"Video ID: {video_id}, PageRank Score: {score}")
 
         # Limit graph to a subset of nodes (e.g., top 50 high-degree nodes)
         top_degree_nodes = sorted(G.degree, key=lambda x: x[1], reverse=True)[:50]
@@ -195,11 +195,7 @@ class YouTubeAnalysisApp(QMainWindow):
         subset = G.subgraph(subset_nodes)
 
         # Spring layout with subset
-        try:
-            pos = nx.spring_layout(subset, seed=42, k=0.15, iterations=50)
-        except Exception as e:
-            self.status_label.setText("Error generating graph layout.")
-            return
+        pos = nx.spring_layout(subset, seed=42, k=0.15, iterations=50)
 
         # Plot the subset graph
         plt.figure(figsize=(10, 10))
