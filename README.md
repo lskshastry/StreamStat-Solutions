@@ -1,6 +1,12 @@
 # StreatStat-Solutions
 Shared repo for analyzing YouTube data for Cpt_S 415 at WSU
 
+Run youtube_gui.py to fully carry out functionality!
+
+--------------
+
+To run individual processes if preferred:
+
 First to run youtube_start.py
 Insert zip folders into DataZip
 The files will be auto-extracted, cleansed, and parsed...
